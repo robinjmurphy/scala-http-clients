@@ -7,7 +7,7 @@ import dispatch.{url => Url}
 
 class DispatchClient extends AsyncHttpClient {
   def get(url: String, params: Map[String, String], headers: Map[String, String]): Future[Response] = {
-    Http(Url(url) <:< headers).map(response => Response(response.getStatusCode, response.getResponseBody))
+    Http(Url(url) <:< headers <<? params).map(response => Response(response.getStatusCode, response.getResponseBody))
   }
 
   def put(url: String, body: String, params: Map[String, String], headers: Map[String, String]): Future[Response] = {

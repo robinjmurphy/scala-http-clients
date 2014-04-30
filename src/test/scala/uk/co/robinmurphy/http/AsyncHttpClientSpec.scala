@@ -23,7 +23,7 @@ trait AsyncHttpClientSpec extends FunSpec with MustMatchers with BeforeAndAfter 
 
   describe(".get") {
     it("returns a response") {
-      stubFor(get(urlMatching("/")).willReturn(aResponse().withStatus(200).withBody("Hello world")))
+      stubFor(get(urlEqualTo("/")).willReturn(aResponse().withStatus(200).withBody("Hello world")))
 
       val request = client.get(url)
       val response = Await.result(request, timeout)
@@ -33,12 +33,21 @@ trait AsyncHttpClientSpec extends FunSpec with MustMatchers with BeforeAndAfter 
     }
 
     it("supports request headers") {
-      stubFor(get(urlMatching("/")).willReturn(aResponse().withStatus(200).withBody("Hello world")))
+      stubFor(get(urlEqualTo("/")).willReturn(aResponse().withStatus(200).withBody("Hello world")))
 
       val request = client.get(url, headers = Map("Accept" -> "application/json"))
       Await.ready(request, timeout)
 
-      verify(getRequestedFor(urlMatching("/")).withHeader("Accept", matching("application/json")))
+      verify(getRequestedFor(urlEqualTo("/")).withHeader("Accept", matching("application/json")))
+    }
+
+    it("support query string parameters") {
+      stubFor(get(urlEqualTo("/?foo=bar")).willReturn(aResponse().withStatus(200).withBody("Hello world")))
+
+      val request = client.get(url, params = Map("foo" -> "bar"))
+      Await.ready(request, timeout)
+
+      verify(getRequestedFor(urlEqualTo("/?foo=bar")))
     }
   }
 }
