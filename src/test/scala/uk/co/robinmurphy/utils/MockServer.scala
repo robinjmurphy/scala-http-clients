@@ -7,8 +7,9 @@ object MockServer {
   val server = new WireMockServer(3333)
 
   def reset() {
-    server.start()
+    if (!server.isRunning) server.start()
     WireMock.configureFor("localhost", 3333)
+    WireMock.reset()
   }
 
   def stop() {

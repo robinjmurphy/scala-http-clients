@@ -134,4 +134,36 @@ trait AsyncHttpClientSpec extends FunSpec with MustMatchers with BeforeAndAfter 
       verify(putRequestedFor(urlEqualTo("/?foo=bar")))
     }
   }
+
+  describe(".delete") {
+    it("returns a response") {
+      stubFor(delete(urlEqualTo("/")).willReturn(aResponse()
+        .withStatus(200).withBody("Hello world").withHeader("Content-Type", "text/html")))
+
+      val request = client.delete(url)
+      val response = Await.result(request, timeout)
+
+      response.statusCode must be(200)
+      response.body must be("Hello world")
+      response.headers.get("Content-Type") must be(Some("text/html"))
+    }
+
+    it("supports request headers") {
+      stubFor(delete(urlEqualTo("/")).willReturn(aResponse().withStatus(200).withBody("Hello world")))
+
+      val request = client.delete(url, headers = Map("Accept" -> "application/json"))
+      Await.ready(request, timeout)
+
+      verify(deleteRequestedFor(urlEqualTo("/")).withHeader("Accept", matching("application/json")))
+    }
+
+    it("support query string parameters") {
+      stubFor(delete(urlEqualTo("/?foo=bar")).willReturn(aResponse().withStatus(200).withBody("Hello world")))
+
+      val request = client.delete(url, params = Map("foo" -> "bar"))
+      Await.ready(request, timeout)
+
+      verify(deleteRequestedFor(urlEqualTo("/?foo=bar")))
+    }
+  }
 }
