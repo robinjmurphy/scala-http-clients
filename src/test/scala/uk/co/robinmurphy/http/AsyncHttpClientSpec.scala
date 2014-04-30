@@ -8,7 +8,6 @@ import com.github.tomakehurst.wiremock.client.WireMock._
 
 trait AsyncHttpClientSpec extends FunSpec with MustMatchers with BeforeAndAfter {
   var client: AsyncHttpClient = _
-  val name: String
   def getClient: AsyncHttpClient
   val url = "http://localhost:3333"
   val timeout = 2.seconds
