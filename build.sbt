@@ -6,6 +6,6 @@ scalaVersion := "2.10.3"
 
 libraryDependencies ++= Seq(
   "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
-  "org.scalatest" % "scalatest_2.11" % "2.1.5" % "test",
+  "org.scalatest" %% "scalatest" % "2.1.5" % "test",
   "com.github.tomakehurst" % "wiremock" % "1.46" % "test"
 )
