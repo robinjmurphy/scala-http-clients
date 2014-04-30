@@ -52,4 +52,45 @@ trait AsyncHttpClientSpec extends FunSpec with MustMatchers with BeforeAndAfter 
       verify(getRequestedFor(urlEqualTo("/?foo=bar")))
     }
   }
+
+  describe(".post") {
+    it("returns a response") {
+      stubFor(post(urlEqualTo("/")).willReturn(aResponse()
+        .withStatus(200).withBody("Hello world").withHeader("Content-Type", "text/html")))
+
+      val request = client.post(url, "Body")
+      val response = Await.result(request, timeout)
+
+      response.statusCode must be(200)
+      response.body must be("Hello world")
+      response.headers.get("Content-Type") must be(Some("text/html"))
+    }
+
+    it("sends the request body") {
+      stubFor(get(urlEqualTo("/")).willReturn(aResponse().withStatus(200).withBody("Hello world")))
+
+      val request = client.get(url)
+      Await.ready(request, timeout)
+
+      verify(postRequestedFor(urlEqualTo("/")).withRequestBody(equalTo("Body")))
+    }
+
+    it("supports request headers") {
+      stubFor(post(urlEqualTo("/")).willReturn(aResponse().withStatus(200).withBody("Hello world")))
+
+      val request = client.post(url, "Body", headers = Map("Accept" -> "application/json"))
+      Await.ready(request, timeout)
+
+      verify(postRequestedFor(urlEqualTo("/")).withHeader("Accept", matching("application/json")))
+    }
+
+    it("support query string parameters") {
+      stubFor(post(urlEqualTo("/?foo=bar")).willReturn(aResponse().withStatus(200).withBody("Hello world")))
+
+      val request = client.post(url, "Body", params = Map("foo" -> "bar"))
+      Await.ready(request, timeout)
+
+      verify(postRequestedFor(urlEqualTo("/?foo=bar")))
+    }
+  }
 }
