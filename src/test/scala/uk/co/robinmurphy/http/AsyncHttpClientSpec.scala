@@ -31,5 +31,14 @@ trait AsyncHttpClientSpec extends FunSpec with MustMatchers with BeforeAndAfter 
       response.statusCode must be(200)
       response.body must be("Hello world")
     }
+
+    it("supports request headers") {
+      stubFor(get(urlMatching("/")).willReturn(aResponse().withStatus(200).withBody("Hello world")))
+
+      val request = client.get(url, headers = Map("Accept" -> "application/json"))
+      Await.ready(request, timeout)
+
+      verify(getRequestedFor(urlMatching("/")).withHeader("Accept", matching("application/json")))
+    }
   }
 }
