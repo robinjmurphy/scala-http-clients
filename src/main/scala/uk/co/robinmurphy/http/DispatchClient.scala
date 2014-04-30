@@ -14,7 +14,7 @@ class DispatchClient extends AsyncHttpClient {
   }
 
   def put(url: String, body: String, params: Map[String, String], headers: Map[String, String]): Future[Response] = {
-    Http(Url(url).PUT <:< headers <<? params).map(responseFromDispatchResponse)
+    Http(Url(url).PUT <:< headers <<? params << body).map(responseFromDispatchResponse)
   }
 
   def post(url: String, body: String, params: Map[String, String], headers: Map[String, String]): Future[Response] = {
