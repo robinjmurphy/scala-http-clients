@@ -1,5 +1,7 @@
 # scala-http-clients
 
+[![Build Status](https://travis-ci.org/robinjmurphy/scala-http-clients.svg)](https://travis-ci.org/robinjmurphy/scala-http-clients)
+
 > HTTP client examples in Scala
 
 When learning Scala I found very few good examples of HTTP clients in use. This project contains a set of example HTTP clients that use a range of popular Scala and Java libraries.
