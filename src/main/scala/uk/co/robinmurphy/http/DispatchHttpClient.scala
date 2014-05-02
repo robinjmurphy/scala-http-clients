@@ -7,7 +7,7 @@ import dispatch.{url => Url}
 import com.ning.http.client.FluentCaseInsensitiveStringsMap
 import scala.collection.JavaConverters._
 
-class DispatchClient extends AsyncHttpClient {
+class DispatchHttpClient extends AsyncHttpClient {
 
   def get(url: String, params: Map[String, String], headers: Map[String, String]): Future[Response] = {
     Http(Url(url).GET <:< headers <<? params).map(responseFromDispatchResponse)
