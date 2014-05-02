@@ -37,5 +37,5 @@ An asynchronous version of the interface is implemented where asyncronous client
 |Client|Library|Sync/Async|
 |------|-------|----------|
 |[DispatchHttpClient](src/main/scala/uk/co/robinmurphy/http/DispatchHttpClient.scala)|[Dispatch](http://dispatch.databinder.net/Dispatch.html)|Async|
-|`ApacheHttpClient`|[Apache HttpComponents Client](https://hc.apache.org/httpcomponents-client-ga/index.html)|Sync|
+|[ApacheHttpClient](src/main/scala/uk/co/robinmurphy/http/ApacheHttpClient.scala)|[Apache HttpComponents Client](https://hc.apache.org/httpcomponents-client-ga/index.html)|Sync|
 |`SprayHttpClient`|[Sprary client](https://github.com/spray/spray/wiki/spray-client)|Async|
