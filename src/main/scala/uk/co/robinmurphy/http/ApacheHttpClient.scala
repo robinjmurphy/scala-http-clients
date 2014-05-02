@@ -52,7 +52,7 @@ class ApacheHttpClient extends HttpClient {
 
   private def queryStringFromParams(params: Map[String, String]): String = {
     val pairs = params.toList.map(pair => s"${pair._1}=${pair._2}")
-    if (pairs.isEmpty) "" else pairs.mkString("?", "=", "")
+    if (pairs.isEmpty) "" else pairs.mkString("?", "&", "")
   }
 
 }
