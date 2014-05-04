@@ -9,7 +9,7 @@ parallelExecution in Test := false
 resolvers += "spray repo" at "http://repo.spray.io"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-actor" % "2.3.2",
+  "com.typesafe.akka" %% "akka-actor" % "2.2.2",
   "io.spray" % "spray-client" % "1.2.1",
   "commons-io" % "commons-io" % "2.4",
   "org.apache.httpcomponents" % "httpclient" % "4.3.1",
