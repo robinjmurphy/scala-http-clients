@@ -6,7 +6,10 @@ scalaVersion := "2.10.3"
 
 parallelExecution in Test := false
 
+resolvers += "spray repo" at "http://repo.spray.io"
+
 libraryDependencies ++= Seq(
+  "io.spray" % "spray-client" % "1.2.1",
   "commons-io" % "commons-io" % "2.4",
   "org.apache.httpcomponents" % "httpclient" % "4.3.1",
   "org.apache.httpcomponents" % "fluent-hc" % "4.3.1",
