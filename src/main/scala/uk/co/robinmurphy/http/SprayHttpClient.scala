@@ -11,10 +11,6 @@ class SprayHttpClient extends AsyncHttpClient {
   import system.dispatcher
   val pipeline: HttpRequest => Future[HttpResponse] = sendReceive
 
-  def sprayHeadersFromMap(map: Map[String, String]): List[HttpHeader] = {
-    map.foldLeft(List[HttpHeader]())((list, header) => list ++ List(RawHeader(header._1, header._2)))
-  }
-
   def get(url: String, params: Map[String, String], headers: Map[String, String]): Future[Response] = {
     pipeline(Get(uri(url, params)).withHeaders(sprayHeadersFromMap(headers))).map(responseFromSprayResponse)
   }
@@ -38,6 +34,10 @@ class SprayHttpClient extends AsyncHttpClient {
   }
 
   private def uri(url: String, params: Map[String, String]): Uri = Uri(url).copy(query = Uri.Query(params))
+
+  private def sprayHeadersFromMap(map: Map[String, String]): List[HttpHeader] = {
+    map.foldLeft(List[HttpHeader]())((list, header) => list ++ List(RawHeader(header._1, header._2)))
+  }
 
   private def responseFromSprayResponse(response: HttpResponse): Response = {
     Response(response.status.intValue, response.entity.asString, headersFromSprayHeaders(response.headers))
