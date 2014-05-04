@@ -33,6 +33,10 @@ class SprayHttpClient extends AsyncHttpClient {
     pipeline(Delete(uri(url, params)).withHeaders(sprayHeadersFromMap(headers))).map(responseFromSprayResponse)
   }
 
+  def shutdown() {
+    system.shutdown()
+  }
+
   private def uri(url: String, params: Map[String, String]): Uri = Uri(url).copy(query = Uri.Query(params))
 
   private def responseFromSprayResponse(response: HttpResponse): Response = {
